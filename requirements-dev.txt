@@ -1,0 +1,6 @@
+# RiskLens AI - Development / Testing Dependencies
+-r requirements.txt
+
+pytest==8.3.4               # Test framework
+pytest-cov==6.0.0           # Code coverage reports
+ruff==0.8.4                 # Python linter + formatter

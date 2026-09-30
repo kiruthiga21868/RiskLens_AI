@@ -1,0 +1,35 @@
+# =============================================================================
+# RiskLens AI - Runtime Dependencies
+# Versions pinned for reproducibility on Python 3.10
+# =============================================================================
+
+# --- Web Framework -----------------------------------------------------------
+fastapi==0.115.6            # Modern async web framework with auto-OpenAPI docs
+uvicorn[standard]==0.34.0   # ASGI server that runs FastAPI
+pydantic==2.10.4            # Data validation / schemas (v2)
+pydantic-settings==2.7.0    # Reads config from environment + .env files
+python-multipart==0.0.20    # Required by FastAPI for form/file uploads
+email-validator==2.2.0      # Validates email addresses in Pydantic EmailStr
+
+# --- Database ----------------------------------------------------------------
+SQLAlchemy==2.0.36          # ORM - maps Python classes to PostgreSQL tables
+psycopg2-binary==2.9.10     # PostgreSQL driver used by SQLAlchemy
+
+# --- Authentication ----------------------------------------------------------
+python-jose[cryptography]==3.3.0   # JWT token create/verify
+bcrypt==4.2.1                      # Password hashing (modern, replaces passlib)
+
+# --- Machine Learning / Data -------------------------------------------------
+numpy==1.26.4               # Numerical computing
+pandas==2.2.3               # Data frames / dataset manipulation
+scikit-learn==1.6.0         # Classification models + metrics + tuning
+shap==0.46.0                # Explainable AI (feature importance)
+joblib==1.4.2               # Model serialization (.joblib)
+matplotlib==3.10.0          # Charts for EDA / SHAP plots
+
+# --- Reporting ---------------------------------------------------------------
+reportlab==4.2.5            # Generates PDF reports
+
+# --- Utilities ---------------------------------------------------------------
+python-dotenv==1.0.1        # Loads .env files into environment
+httpx==0.28.1               # HTTP client (used by FastAPI TestClient)

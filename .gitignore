@@ -1,0 +1,65 @@
+# ===========================================================================
+# RiskLens AI - Git Ignore Rules
+# Keeps secrets, build artifacts, and large datasets OUT of the repository.
+# ===========================================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# --- Secrets (NEVER commit real credentials) ---
+.env
+.env.local
+*.pem
+*.key
+
+# --- Machine Learning artifacts (regenerate via training scripts) ---
+*.pkl
+*.joblib
+*.onnx
+backend/app/ml/models/*.joblib
+backend/app/ml/models/*.pkl
+backend/app/ml/models/figures/
+
+# --- Datasets (may be large / licensed) ---
+datasets/*.csv
+datasets/*.zip
+datasets/raw/
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Node.js / Frontend ---
+node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+*.tsbuildinfo
+
+# --- Testing / Coverage ---
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+backend/tests/.coverage
+
+# --- Logs ---
+*.log
+logs/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Docker ---
+docker/nginx/*.conf.tmp
