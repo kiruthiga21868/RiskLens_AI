@@ -233,13 +233,14 @@ the complete application as three Render resources:
 6. Verify the backend at:
 
    ```text
-   https://risklens-backend.onrender.com/api/v1/health
+   https://<your-backend-service>.onrender.com/api/v1/health
    ```
 
-The Blueprint sets `VITE_API_URL` on the frontend, configures the FastAPI
-service to listen on Render's `$PORT`, and adds the React Router rewrite.
-If Render assigns different service URLs, update `VITE_API_URL` on the
-frontend and `CORS_ORIGINS` on the backend to match those URLs, then redeploy.
+The Blueprint derives `VITE_API_HOST` from the backend service, configures the
+FastAPI service to listen on Render's `$PORT`, and adds the React Router
+rewrite. It also permits Render-generated frontend hostnames through
+`CORS_ORIGIN_REGEX`, so changing the generated service suffix does not break
+authentication.
 
 Render's free web services can sleep after inactivity, so the first request
 after a period of inactivity may take several seconds.

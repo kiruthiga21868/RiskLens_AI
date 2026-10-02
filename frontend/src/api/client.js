@@ -1,9 +1,12 @@
 import axios from 'axios'
 
-// Use the Vite proxy locally and the deployed API when the frontend is hosted
-// separately (for example, on Vercel).
+// Use the Vite proxy locally. Render supplies the backend hostname through
+// VITE_API_HOST so generated service URLs do not need to be hard-coded.
+const configuredApiUrl = import.meta.env.VITE_API_URL
+  || (import.meta.env.VITE_API_HOST ? `https://${import.meta.env.VITE_API_HOST}/api/v1` : '/api/v1')
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api/v1',
+  baseURL: configuredApiUrl,
 })
 
 // Attach the JWT on every request if present.

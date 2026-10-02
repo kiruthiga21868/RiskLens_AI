@@ -59,6 +59,7 @@ class Settings(BaseSettings):
 
     # --- CORS: which frontend origins may call the API ---
     CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    CORS_ORIGIN_REGEX: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",  # absolute path -> CWD-independent
