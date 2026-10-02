@@ -213,7 +213,38 @@ docker compose up --build
 reads `DATABASE_URL` (switched to postgres automatically), and a multi-stage frontend
 that builds the React app and serves it via Nginx while reverse-proxying `/api`.
 
-## 8. Vercel Deployment
+## 8. Render Deployment
+
+The repository includes a [`render.yaml`](./render.yaml) Blueprint that deploys
+the complete application as three Render resources:
+
+- `risklens-backend`: FastAPI web service
+- `risklens-frontend`: React/Vite static site
+- `risklens-db`: PostgreSQL database
+
+### Deploy with the Blueprint
+
+1. Push the repository to GitHub.
+2. In Render, choose **New → Blueprint** and select this repository.
+3. Keep the repository root as the Blueprint root and apply `render.yaml`.
+4. Provide values for `ADMIN_USERNAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD`
+   when Render prompts for the backend service secrets.
+5. Wait for the database, backend, and frontend deployments to finish.
+6. Verify the backend at:
+
+   ```text
+   https://risklens-backend.onrender.com/api/v1/health
+   ```
+
+The Blueprint sets `VITE_API_URL` on the frontend, configures the FastAPI
+service to listen on Render's `$PORT`, and adds the React Router rewrite.
+If Render assigns different service URLs, update `VITE_API_URL` on the
+frontend and `CORS_ORIGINS` on the backend to match those URLs, then redeploy.
+
+Render's free web services can sleep after inactivity, so the first request
+after a period of inactivity may take several seconds.
+
+## 9. Vercel Deployment
 
 Vercel is configured to build and serve the React/Vite frontend from the
 repository root. The FastAPI service contains large ML dependencies and should
@@ -251,7 +282,7 @@ production admin credentials. After the backend is reachable, verify
 
 ---
 
-## 9. Roadmap
+## 10. Roadmap
 
 | Sprint | Component | Status |
 |---|---|---|
@@ -272,6 +303,6 @@ production admin credentials. After the backend is reachable, verify
 
 ---
 
-## 10. License & Attribution
+## 11. License & Attribution
 
 © 2026 RiskLens AI. Built as an educational cybersecurity / ML engineering project.
