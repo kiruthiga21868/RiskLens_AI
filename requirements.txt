@@ -21,11 +21,9 @@ bcrypt==4.2.1                      # Password hashing (modern, replaces passlib)
 
 # --- Machine Learning / Data -------------------------------------------------
 numpy==1.26.4               # Numerical computing
-pandas==2.2.3               # Data frames / dataset manipulation
 scikit-learn==1.6.0         # Classification models + metrics + tuning
 shap==0.46.0                # Explainable AI (feature importance)
 joblib==1.4.2               # Model serialization (.joblib)
-matplotlib==3.10.0          # Charts for EDA / SHAP plots
 
 # --- Reporting ---------------------------------------------------------------
 reportlab==4.2.5            # Generates PDF reports

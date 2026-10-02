@@ -244,6 +244,11 @@ frontend and `CORS_ORIGINS` on the backend to match those URLs, then redeploy.
 Render's free web services can sleep after inactivity, so the first request
 after a period of inactivity may take several seconds.
 
+The backend is pinned to Python 3.10.13 because the pinned scientific
+dependencies provide compatible prebuilt wheels for that runtime. Do not
+change the Render service to Python 3.14 without upgrading and retesting the
+entire ML dependency set.
+
 ## 9. Vercel Deployment
 
 Vercel is configured to build and serve the React/Vite frontend from the
