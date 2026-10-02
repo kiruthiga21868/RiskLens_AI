@@ -1,42 +1,70 @@
 services:
+  # =========================
+  # BACKEND - FastAPI
+  # =========================
   - type: web
     name: risklens-backend
     runtime: python
+    plan: free
     rootDir: backend
+
     buildCommand: pip install -r ../requirements.txt
+
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
     healthCheckPath: /api/v1/health
+
     envVars:
       - key: DATABASE_URL
         fromDatabase:
           name: risklens-db
           property: connectionString
+
       - key: JWT_SECRET_KEY
         generateValue: true
+
       - key: DEBUG
         value: "false"
+
       - key: CORS_ORIGINS
         value: '["https://risklens-frontend.onrender.com"]'
+
       - key: ADMIN_USERNAME
         sync: false
+
       - key: ADMIN_EMAIL
         sync: false
+
       - key: ADMIN_PASSWORD
         sync: false
 
-  - type: static
+
+  # =========================
+  # FRONTEND - React + Vite
+  # =========================
+  - type: web
+    runtime: static
     name: risklens-frontend
+
     rootDir: frontend
+
     buildCommand: npm ci && npm run build
+
     staticPublishPath: dist
+
     envVars:
       - key: VITE_API_URL
         value: https://risklens-backend.onrender.com/api/v1
+
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
 
+
+# =========================
+# POSTGRESQL DATABASE
+# =========================
 databases:
   - name: risklens-db
     plan: free
