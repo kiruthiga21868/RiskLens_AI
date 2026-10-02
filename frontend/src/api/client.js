@@ -1,7 +1,10 @@
 import axios from 'axios'
 
-// Base URL is the Vite proxy (dev) / same origin (prod via Nginx).
-const api = axios.create({ baseURL: '/api/v1' })
+// Use the Vite proxy locally and the deployed API when the frontend is hosted
+// separately (for example, on Vercel).
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '/api/v1',
+})
 
 // Attach the JWT on every request if present.
 api.interceptors.request.use((config) => {

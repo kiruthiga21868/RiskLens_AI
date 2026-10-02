@@ -213,9 +213,45 @@ docker compose up --build
 reads `DATABASE_URL` (switched to postgres automatically), and a multi-stage frontend
 that builds the React app and serves it via Nginx while reverse-proxying `/api`.
 
+## 8. Vercel Deployment
+
+Vercel is configured to build and serve the React/Vite frontend from the
+repository root. The FastAPI service contains large ML dependencies and should
+run as a separate persistent service (for example, Render, Railway, or a VM);
+Vercel's serverless Python runtime is not a suitable replacement for this
+backend.
+
+### Deploy the frontend
+
+1. Push the repository to GitHub and import it into Vercel.
+2. Keep the project root as the repository root. The checked-in `vercel.json`
+   runs the frontend build and serves `frontend/dist`.
+3. Add this Vercel project environment variable:
+
+   ```text
+   VITE_API_URL=https://<your-backend-domain>/api/v1
+   ```
+
+   The value must include `/api/v1` and must not have a trailing slash.
+4. Deploy. The rewrite in `vercel.json` keeps React Router routes working on
+   direct navigation and refresh.
+
+### Configure the backend
+
+Set the backend's `CORS_ORIGINS` environment variable to the deployed Vercel
+origin (and any local origins you still need), for example:
+
+```text
+CORS_ORIGINS=["https://<your-project>.vercel.app","http://localhost:5173"]
+```
+
+Also set a strong, unique `JWT_SECRET_KEY`, a production `DATABASE_URL`, and
+production admin credentials. After the backend is reachable, verify
+`https://<your-backend-domain>/api/v1/health`, then open the Vercel URL.
+
 ---
 
-## 8. Roadmap
+## 9. Roadmap
 
 | Sprint | Component | Status |
 |---|---|---|
@@ -236,6 +272,6 @@ that builds the React app and serves it via Nginx while reverse-proxying `/api`.
 
 ---
 
-## 9. License & Attribution
+## 10. License & Attribution
 
 © 2026 RiskLens AI. Built as an educational cybersecurity / ML engineering project.
